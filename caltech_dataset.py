@@ -15,10 +15,7 @@ def pil_loader(path):
 
 
 class Caltech(VisionDataset):
-    images = {}
-    labels = {}
-    labels_of_images={}
-    indexes_for_class={}
+
     def __init__(self, root, split='train', transform=None, target_transform=None):
         super(Caltech, self).__init__(root, transform=transform, target_transform=target_transform)
         self.root = root
@@ -38,7 +35,10 @@ class Caltech(VisionDataset):
         we can create a map of (idLabel, label)
         '''
         file = open('Caltech101/' + split + '.txt', "r")
-
+        self.images = {}
+        self.labels = {}
+        self.labels_of_images = {}
+        self.indexes_for_class = {}
         lines = file.readlines()
         count_images = 0
         count_labels = 0
