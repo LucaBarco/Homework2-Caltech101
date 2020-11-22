@@ -35,7 +35,7 @@ class Caltech(VisionDataset):
         '''
 
         print('Caltech101' + '/' + split + '.txt')
-        file = open('./Caltech101'+'/'+split+'.txt', "r")
+        file = open('Caltech101'+'/'+split+'.txt', "r")
 
         lines = file.readlines()
         self.images = {}
