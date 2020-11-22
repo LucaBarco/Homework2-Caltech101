@@ -40,7 +40,7 @@ class Caltech(VisionDataset):
 
         lines = file.readlines()
         count_images = 0
-
+        count_labels = 0
         for line in lines:
             if "BACKGROUND_Google" not in line:
                 label_name = line.split('/')[0]
