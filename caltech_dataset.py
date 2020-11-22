@@ -15,6 +15,8 @@ def pil_loader(path):
 
 
 class Caltech(VisionDataset):
+    images = {}
+    labels = {}
     def __init__(self, root, split='train', transform=None, target_transform=None):
         super(Caltech, self).__init__(root, transform=transform, target_transform=target_transform)
         self.root = root
@@ -36,10 +38,7 @@ class Caltech(VisionDataset):
         file = open('Caltech101/' + split + '.txt', "r")
 
         lines = file.readlines()
-        self.images = {}
         count_images = 0
-        self.labels = {}
-        count_labels = 0
         for line in lines:
 
             if "BACKGROUND_Google" not in line:
