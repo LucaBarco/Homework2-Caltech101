@@ -29,6 +29,35 @@ class Caltech(VisionDataset):
           through the index
         - Labels should start from 0, so for Caltech you will have lables 0...100 (excluding the background class) 
         '''
+        '''
+        we can create a list of (id, image, idLabel)
+        we can create a map of (idLabel, label)
+        '''
+
+        if split=="train":
+            #load train.txt
+            file=open("train.txt", 'r')
+        elif split=="test":
+            #load test.txt
+            file = open("train.txt", 'r')
+
+        lines=file.readlines()
+        self.images={}
+        count_images=0
+        self.labels={}
+        count_labels=0
+        for line in lines:
+            if "BACKGROUND_Google" not in line:
+                label_name = line.split('/')[0]
+                if label_name in self.labels.keys():
+                    self.labels[label_name] = count_labels
+                    count_labels = count_labels+1
+                self.images[count_images] = (pil_loader(line[:-1]), self.labels[label_name])
+                count_images = count_images + 1
+
+
+
+
 
     def __getitem__(self, index):
         '''
@@ -40,10 +69,10 @@ class Caltech(VisionDataset):
             tuple: (sample, target) where target is class_index of the target class.
         '''
 
-        image, label = ... # Provide a way to access image and label via index
+        # Provide a way to access image and label via index
                            # Image should be a PIL Image
                            # label can be int
-
+        image, label = self.images[index]
         # Applies preprocessing when accessing the image
         if self.transform is not None:
             image = self.transform(image)
@@ -55,5 +84,5 @@ class Caltech(VisionDataset):
         The __len__ method returns the length of the dataset
         It is mandatory, as this is used by several other components
         '''
-        length = ... # Provide a way to get the length (number of elements) of the dataset
+        length = len(self.images) # Provide a way to get the length (number of elements) of the dataset
         return length
