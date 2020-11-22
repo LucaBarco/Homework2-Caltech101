@@ -17,6 +17,7 @@ def pil_loader(path):
 class Caltech(VisionDataset):
     images = {}
     labels = {}
+    labels_of_images={}
     indexes_for_class={}
     def __init__(self, root, split='train', transform=None, target_transform=None):
         super(Caltech, self).__init__(root, transform=transform, target_transform=target_transform)
@@ -54,7 +55,8 @@ class Caltech(VisionDataset):
                 else:
                     self.indexes_for_class[label_name].append(count_images)
 
-                self.images[count_images] = (pil_loader(root + '/' + line[:-1]), self.labels[label_name])
+                self.images[count_images] = pil_loader(root + '/' + line[:-1])
+                self.labels_of_images[count_images] = self.labels[label_name]
                 count_images = count_images + 1
         print("Ho contato %d immagini"%count_images)
 
@@ -71,7 +73,8 @@ class Caltech(VisionDataset):
         # Provide a way to access image and label via index
         # Image should be a PIL Image
         # label can be int
-        image, label = self.images[index]
+        image = self.images[index]
+        label= self.labels_of_images[index]
         # Applies preprocessing when accessing the image
         if self.transform is not None:
             image = self.transform(image)
