@@ -54,8 +54,8 @@ class Caltech(VisionDataset):
                     self.indexes_for_class[label_name] = [count_images]
                 else:
                     self.indexes_for_class[label_name].append(count_images)
-
-                self.images[count_images] = pil_loader(root + '/' + line[:-1])
+                line=line.strip('\n')
+                self.images[count_images] = pil_loader(root + '/' + line)
                 self.labels_of_images[count_images] = self.labels[label_name]
                 count_images = count_images + 1
         print(split+" Ho contato %d immagini"%count_images)
