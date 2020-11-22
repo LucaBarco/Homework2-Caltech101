@@ -40,25 +40,25 @@ class Caltech(VisionDataset):
         self.labels_of_images = {}
         self.indexes_for_class = {}
         lines = file.readlines()
-        count_images = 0
-        count_labels = 0
+        self.count_images = 0
+        self.count_labels = 0
         for line in lines:
             if "BACKGROUND_Google" not in line:
                 label_name = line.split('/')[0]
 
                 if label_name not in self.labels.keys():
-                    self.labels[label_name] = count_labels
-                    count_labels = count_labels + 1
+                    self.labels[label_name] = self.count_labels
+                    self.count_labels = self.count_labels + 1
 
                 if label_name not in self.indexes_for_class.keys():
-                    self.indexes_for_class[label_name] = [count_images]
+                    self.indexes_for_class[label_name] = [self.count_images]
                 else:
-                    self.indexes_for_class[label_name].append(count_images)
+                    self.indexes_for_class[label_name].append(self.count_images)
                 line=line.strip('\n')
-                self.images[count_images] = pil_loader(root + '/' + line)
-                self.labels_of_images[count_images] = self.labels[label_name]
-                count_images = count_images + 1
-        print(split+" Ho contato %d immagini"%count_images)
+                self.images[self.count_images] = pil_loader(root + '/' + line)
+                self.labels_of_images[self.count_images] = self.labels[label_name]
+                self.count_images = self.count_images + 1
+        print(split+" Ho contato %d immagini"%self.count_images)
 
     def __getitem__(self, index):
         '''
@@ -73,7 +73,7 @@ class Caltech(VisionDataset):
         # Provide a way to access image and label via index
         # Image should be a PIL Image
         # label can be int
-        if index <len(self):
+        if index <self.count_images:
             image = self.images[index]
             label= self.labels_of_images[index]
             # Applies preprocessing when accessing the image
@@ -91,7 +91,7 @@ class Caltech(VisionDataset):
         '''
         length=0
         if self.images :
-            length = len(self.images)  # Provide a way to get the length (number of elements) of the dataset
+            length = self.count_images  # Provide a way to get the length (number of elements) of the dataset
         return length
 
     def split_training_set(self):
