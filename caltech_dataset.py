@@ -56,7 +56,7 @@ class Caltech(VisionDataset):
 
                 self.images[count_images] = (pil_loader(root + '/' + line[:-1]), self.labels[label_name])
                 count_images = count_images + 1
-
+        print("Ho contato %d immagini. Se sono troppe sono un coglione"%count_images)
 
     def __getitem__(self, index):
         '''
