@@ -50,9 +50,9 @@ class Caltech(VisionDataset):
                     count_labels = count_labels + 1
 
                 if label_name not in self.indexes_for_class.keys():
-                    self.indexes_for_class[label_name]=[count_images]
+                    self.indexes_for_class[label_name] = [count_images]
                 else:
-                    self.indexes_for_class[label_name] = self.indexes_for_class[label_name].append(count_images)
+                    self.indexes_for_class[label_name].append(count_images)
 
                 self.images[count_images] = (pil_loader(root + '/' + line[:-1]), self.labels[label_name])
                 count_images = count_images + 1
