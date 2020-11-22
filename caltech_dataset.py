@@ -17,9 +17,9 @@ def pil_loader(path):
 class Caltech(VisionDataset):
     def __init__(self, root, split='train', transform=None, target_transform=None):
         super(Caltech, self).__init__(root, transform=transform, target_transform=target_transform)
-        self.root=root
-        self.split = split # This defines the split you are going to use
-                           # (split files are called 'train.txt' and 'test.txt')
+        self.root = root
+        self.split = split  # This defines the split you are going to use
+        # (split files are called 'train.txt' and 'test.txt')
 
         '''
         - Here you should implement the logic for reading the splits files and accessing elements
@@ -34,8 +34,7 @@ class Caltech(VisionDataset):
         we can create a map of (idLabel, label)
         '''
 
-        print('Caltech101' + '/' + split + '.txt')
-        file = open('Caltech101'+'/'+split+'.txt', "r")
+        file = open(split + '.txt', "r")
 
         lines = file.readlines()
         self.images = {}
@@ -46,16 +45,12 @@ class Caltech(VisionDataset):
 
             if "BACKGROUND_Google" not in line:
                 label_name = line.split('/')[0]
-                print(line+" "+label_name)
+                print(line + " " + label_name)
                 if label_name in self.labels.keys():
                     self.labels[label_name] = count_labels
-                    count_labels = count_labels+1
-                self.images[count_images] = (pil_loader(root+line[:-1]), self.labels[label_name])
+                    count_labels = count_labels + 1
+                self.images[count_images] = (pil_loader(root + line[:-1]), self.labels[label_name])
                 count_images = count_images + 1
-
-
-
-
 
     def __getitem__(self, index):
         '''
@@ -68,8 +63,8 @@ class Caltech(VisionDataset):
         '''
 
         # Provide a way to access image and label via index
-                           # Image should be a PIL Image
-                           # label can be int
+        # Image should be a PIL Image
+        # label can be int
         image, label = self.images[index]
         # Applies preprocessing when accessing the image
         if self.transform is not None:
@@ -82,5 +77,5 @@ class Caltech(VisionDataset):
         The __len__ method returns the length of the dataset
         It is mandatory, as this is used by several other components
         '''
-        length = len(self.images) # Provide a way to get the length (number of elements) of the dataset
+        length = len(self.images)  # Provide a way to get the length (number of elements) of the dataset
         return length
