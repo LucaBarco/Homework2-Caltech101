@@ -36,10 +36,10 @@ class Caltech(VisionDataset):
 
         if split=="train":
             #load train.txt
-            file=open("./train.txt", 'r')
+            file=open("Caltech101/train.txt", 'r')
         elif split=="test":
             #load test.txt
-            file = open("./train.txt", 'r')
+            file = open("Caltech101/train.txt", 'r')
 
         lines=file.readlines()
         self.images={}
@@ -54,7 +54,7 @@ class Caltech(VisionDataset):
                 if label_name in self.labels.keys():
                     self.labels[label_name] = count_labels
                     count_labels = count_labels+1
-                self.images[count_images] = (pil_loader(line[:-1]), self.labels[label_name])
+                self.images[count_images] = (pil_loader(root+line[:-1]), self.labels[label_name])
                 count_images = count_images + 1
 
 
