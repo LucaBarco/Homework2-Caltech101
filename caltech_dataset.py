@@ -36,10 +36,10 @@ class Caltech(VisionDataset):
 
         if split=="train":
             #load train.txt
-            file=open("train.txt", 'r')
+            file=open("./train.txt", 'r')
         elif split=="test":
             #load test.txt
-            file = open("train.txt", 'r')
+            file = open("./train.txt", 'r')
 
         lines=file.readlines()
         self.images={}
