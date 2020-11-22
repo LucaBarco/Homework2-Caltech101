@@ -44,9 +44,7 @@ class Caltech(VisionDataset):
 
             if "BACKGROUND_Google" not in line:
                 label_name = line.split('/')[0]
-                if label_name not in self.labels.keys():
-                    self.labels[label_name] = count_labels
-                    count_labels = count_labels + 1
+                self.labels[label_name] = self.labels[label_name].append(count_images)
                 self.images[count_images] = (pil_loader(root + '/' + line[:-1]), self.labels[label_name])
                 count_images = count_images + 1
 
@@ -77,3 +75,18 @@ class Caltech(VisionDataset):
         '''
         length = len(self.images)  # Provide a way to get the length (number of elements) of the dataset
         return length
+
+    def split_training_set(self):
+        training_indexes=[]
+        validation_indexes=[]
+
+        #Let's start putting an half of each class
+        for c in self.labels.keys():
+            for i in range(0,len(self.labels[c])):
+                if i%2:
+                    training_indexes.append(self.labels[c][i])
+                else:
+                    validation_indexes.append(self.labels[c][i])
+
+
+        return (training_indexes, validation_indexes)
