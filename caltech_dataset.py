@@ -73,7 +73,7 @@ class Caltech(VisionDataset):
         # Provide a way to access image and label via index
         # Image should be a PIL Image
         # label can be int
-        if index in range(0,len(self)):
+        if index <len(self):
             image = self.images[index]
             label= self.labels_of_images[index]
             # Applies preprocessing when accessing the image
