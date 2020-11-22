@@ -44,7 +44,6 @@ class Caltech(VisionDataset):
 
             if "BACKGROUND_Google" not in line:
                 label_name = line.split('/')[0]
-                print(line + " " + label_name)
                 if label_name not in self.labels.keys():
                     self.labels[label_name] = count_labels
                     count_labels = count_labels + 1
