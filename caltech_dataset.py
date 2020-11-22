@@ -73,11 +73,14 @@ class Caltech(VisionDataset):
         # Provide a way to access image and label via index
         # Image should be a PIL Image
         # label can be int
-        image = self.images[index]
-        label= self.labels_of_images[index]
-        # Applies preprocessing when accessing the image
-        if self.transform is not None:
-            image = self.transform(image)
+        if index in range(0,len(self)):
+            image = self.images[index]
+            label= self.labels_of_images[index]
+            # Applies preprocessing when accessing the image
+            if self.transform is not None:
+                image = self.transform(image)
+        else:
+            image,label=None,None
 
         return image, label
 
@@ -96,7 +99,7 @@ class Caltech(VisionDataset):
         #Let's start putting an half of each class
         for c in self.indexes_for_class.keys():
             for i in range(0,len(self.indexes_for_class[c])):
-                if i%2:
+                if i % 2:
                     training_indexes.append(self.indexes_for_class[c][i])
                 else:
                     validation_indexes.append(self.indexes_for_class[c][i])
