@@ -33,7 +33,6 @@ class Caltech(VisionDataset):
         we can create a list of (id, image, idLabel)
         we can create a map of (idLabel, label)
         '''
-        get_ipython().system(" pwd")
         file = open('Caltech101/' + split + '.txt', "r")
 
         lines = file.readlines()
@@ -49,7 +48,7 @@ class Caltech(VisionDataset):
                 if label_name in self.labels.keys():
                     self.labels[label_name] = count_labels
                     count_labels = count_labels + 1
-                self.images[count_images] = (pil_loader(root + line[:-1]), self.labels[label_name])
+                self.images[count_images] = (pil_loader(root + '/' + line[:-1]), self.labels[label_name])
                 count_images = count_images + 1
 
     def __getitem__(self, index):
