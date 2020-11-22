@@ -34,12 +34,7 @@ class Caltech(VisionDataset):
         we can create a map of (idLabel, label)
         '''
 
-        if split=="train":
-            #load train.txt
-            file=open("Caltech101/train.txt", 'r')
-        elif split=="test":
-            #load test.txt
-            file = open("Caltech101/train.txt", 'r')
+        file = open("Caltech101/"+split+".txt", 'r')
 
         lines=file.readlines()
         self.images={}
