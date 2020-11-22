@@ -33,14 +33,14 @@ class Caltech(VisionDataset):
         we can create a list of (id, image, idLabel)
         we can create a map of (idLabel, label)
         '''
-
+        print('Caltech101' + '/' + split + '.txt')
         file = open('Caltech101'+'/'+split+'.txt', "r")
-        print('Caltech101'+'/'+split+'.txt')
-        lines=file.readlines()
-        self.images={}
-        count_images=0
-        self.labels={}
-        count_labels=0
+
+        lines = file.readlines()
+        self.images = {}
+        count_images = 0
+        self.labels = {}
+        count_labels = 0
         for line in lines:
 
             if "BACKGROUND_Google" not in line:
