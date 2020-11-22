@@ -34,7 +34,7 @@ class Caltech(VisionDataset):
         we can create a map of (idLabel, label)
         '''
 
-        file = open("Caltech101/"+split+".txt", 'r')
+        file = open('Caltech101'+'/'+split+'.txt', "r")
 
         lines=file.readlines()
         self.images={}
