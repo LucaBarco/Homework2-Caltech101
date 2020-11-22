@@ -5,7 +5,7 @@ from PIL import Image
 import os
 import os.path
 import sys
-from typing import List, Tuple
+
 
 def pil_loader(path):
     # open path as file to avoid ResourceWarning (https://github.com/python-pillow/Pillow/issues/835)
@@ -34,7 +34,6 @@ class Caltech(VisionDataset):
         we can create a list of (id, image, idLabel)
         we can create a map of (idLabel, label)
         '''
-        '''
         file = open('Caltech101/' + split + '.txt', "r")
         self.images = {}
         self.labels = {}
@@ -59,20 +58,7 @@ class Caltech(VisionDataset):
                 self.images[self.count_images] = pil_loader(root + '/' + line)
                 self.labels_of_images[self.count_images] = self.labels[label_name]
                 self.count_images = self.count_images + 1
-        print(split+" Ho contato %d immagini"%self.count_images)'''
-
-        _dataset: List[Tuple[Image, int]] = []
-        if split in ("train", "test"):
-            with open(f"Caltech101/{split}.txt", 'r') as f:
-                classes = []
-                for path in f.readlines():
-                    path = path.strip("\n")
-                    clazz = path.split("/")[0]
-                    if clazz != "BACKGROUND_Google":
-                        if clazz not in classes:
-                            classes.append(clazz)
-                        _dataset.append((pil_loader(os.path.join(root, path)), classes.index(clazz)))
-        self.dataset = _dataset
+        print(split+" Ho contato %d immagini"%self.count_images)
 
     def __getitem__(self, index):
         '''
@@ -83,7 +69,7 @@ class Caltech(VisionDataset):
         Returns:
             tuple: (sample, target) where target is class_index of the target class.
         '''
-        '''
+
         # Provide a way to access image and label via index
         # Image should be a PIL Image
         # label can be int
@@ -96,20 +82,6 @@ class Caltech(VisionDataset):
         else:
             image , label=None,None
 
-        return image, label'''
-
-        if index < len(self.dataset):
-            image, label = self.dataset[index]
-        else:
-            image, label = None, None
-            # Provide a way to access image and label via index
-            # Image should be a PIL Image
-            # label can be int
-
-            # Applies preprocessing when accessing the image
-        if self.transform is not None:
-            image = self.transform(image)
-
         return image, label
 
     def __len__(self):
@@ -117,11 +89,10 @@ class Caltech(VisionDataset):
         The __len__ method returns the length of the dataset
         It is mandatory, as this is used by several other components
         '''
-        '''length=0
+        length=0
         if self.images :
             length = self.count_images  # Provide a way to get the length (number of elements) of the dataset
-        return length'''
-        return len(self.dataset) if self.dataset else 0
+        return length
 
     def split_training_set(self):
         training_indexes=[]
