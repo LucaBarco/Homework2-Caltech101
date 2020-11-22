@@ -33,7 +33,7 @@ class Caltech(VisionDataset):
         we can create a list of (id, image, idLabel)
         we can create a map of (idLabel, label)
         '''
-
+        print(os.getcwd())
         file = open('Caltech101/' + split + '.txt', "r")
 
         lines = file.readlines()
