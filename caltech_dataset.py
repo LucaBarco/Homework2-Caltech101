@@ -63,7 +63,7 @@ class Caltech(VisionDataset):
 
         _dataset: List[Tuple[Image, int]] = []
         if split in ("train", "test"):
-            with open(f"./{split}.txt", 'r') as f:
+            with open(f"Caltech101/{split}.txt", 'r') as f:
                 classes = []
                 for path in f.readlines():
                     path = path.strip("\n")
