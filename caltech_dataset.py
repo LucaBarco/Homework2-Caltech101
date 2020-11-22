@@ -17,6 +17,7 @@ def pil_loader(path):
 class Caltech(VisionDataset):
     images = {}
     labels = {}
+    indexes_for_class={}
     def __init__(self, root, split='train', transform=None, target_transform=None):
         super(Caltech, self).__init__(root, transform=transform, target_transform=target_transform)
         self.root = root
@@ -39,16 +40,23 @@ class Caltech(VisionDataset):
 
         lines = file.readlines()
         count_images = 0
-        for line in lines:
 
+        for line in lines:
             if "BACKGROUND_Google" not in line:
                 label_name = line.split('/')[0]
+
                 if label_name not in self.labels.keys():
-                    self.labels[label_name]=[count_images]
+                    self.labels[label_name] = count_labels
+                    count_labels = count_labels + 1
+
+                if label_name not in self.indexes_for_class.keys():
+                    self.indexes_for_class[label_name]=[count_images]
                 else:
-                    self.labels[label_name] = self.labels[label_name].append(count_images)
+                    self.indexes_for_class[label_name] = self.indexes_for_class[label_name].append(count_images)
+
                 self.images[count_images] = (pil_loader(root + '/' + line[:-1]), self.labels[label_name])
                 count_images = count_images + 1
+
 
     def __getitem__(self, index):
         '''
@@ -83,12 +91,12 @@ class Caltech(VisionDataset):
         validation_indexes=[]
 
         #Let's start putting an half of each class
-        for c in self.labels.keys():
-            for i in range(0,len(self.labels[c])):
+        for c in self.indexes_for_class.keys():
+            for i in range(0,len(self.indexes_for_class[c])):
                 if i%2:
-                    training_indexes.append(self.labels[c][i])
+                    training_indexes.append(self.indexes_for_class[c][i])
                 else:
-                    validation_indexes.append(self.labels[c][i])
+                    validation_indexes.append(self.indexes_for_class[c][i])
 
 
         return (training_indexes, validation_indexes)
