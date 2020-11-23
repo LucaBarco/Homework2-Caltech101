@@ -109,6 +109,6 @@ class Caltech(VisionDataset):
 
         return (training_indexes, validation_indexes)
     
-    def return_labels:
+     def return_labels:
         return self.labels.keys()
         
